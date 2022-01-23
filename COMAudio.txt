@@ -1,0 +1,166 @@
+COMAudio 1.0.4
+by Matt Campbell <mattcampbell@pobox.com>
+
+Introduction:
+
+Audiere (http://audiere.sourceforge.net/) is a C++ library which provides audio playback facilities for multiple operating systems, including Windows and Linux.  It supports MP3, Ogg Vorbis, uncompressed WAV, and a few other formats.  It allows simultaneous playback of multiple sounds, with volume, pan, and pitch shift controls for each sound, as well as looping.  Under Windows, Audiere uses DirectSound to accomplish this mixing of audio.  Audiere is free software under the GNU Lesser General Public License (LGPL).
+
+COMAudio is a component for Windows which provides access to the most commonly used features of Audiere from any programming language which supports the Component Object Model (COM).  The primary purpose of COMAudio is to provide access to Audiere from Visual Basic, which is a popular language among game developers.  With COMAudio, your VB game can have a rich audio environment consisting of several simultaneous sounds in various positions in the stereo field, with differing volumes; and all of these sounds can be in a compressed format such as MP3 or Ogg Vorbis.  Thus, COMAudio provides a significant advantage over the subset of DirectX which is normally available to VB developers.
+
+COMAudio also provides two additional features which are not found in Audiere.  First, COMAudio can play sounds stored in a ZIP archive.  COMAudio does not need to extract these sounds to temporary files in order to play them.  This lets you reduce the number of small files that will be stored on the user's disk.  Second, both individual sound files and whole archives can be encrypted.  COMAudio can use the encrypted files without decrypting them to temporary files first.  While a determined programmer could defeat the encryption, it would take some work; and it will be nearly impossible for an average computer user to do so.  This feature can help you protect your audio from theft.
+
+As mentioned earlier, COMAudio can be used from any programming language which supports the Component Object Model (COM).  The examples in this documentation will use Visual Basic 6.0.  Other supported programming languages include Microsoft's JavaScript implementation, AutoIt (www.autoitscript.com), and the scripting language of the JAWS for Windows screen reader.
+
+COMAudio is in the public domain.  I hope you'll find it useful.
+
+Examples:
+
+Before the details of COMAudio's usage are explained, here are a few examples.  These examples are for Visual Basic 6.0.  The first example will open the audio device, open a sound file, and start playing it:
+
+Dim CAService As COMAudioService
+Dim AudioDevice As IAudioDevice
+Dim Sound As IOutputStream
+Set CAService = CreateObject("COMAudio.Service")
+set AudioDevice = CAService.OpenDevice("", "")
+Set Sound = AudioDevice.OpenSound("sounds/buzz.ogg", False)
+Sound.Play
+
+Note that in this case, "sounds" (in line 3) could refer either to a directory called "sounds", or a ZIP archive called "sounds.dat".  Thus, the same interface is used for both stand-alone sound files and sound files within a ZIP archive.  The second argument of the OpenSound method indicates whether the audio will be streamed.  Since it is false in this example, the entire sound will be loaded into memory first.
+
+The second example is more complex.  It first sets the expected extension for ZIP archives and enables access to encrypted files.  Then, it opens the audio device, opens a streaming sound, and starts playing the sound repeatedly:
+
+Dim CAService As COMAudioService
+Dim AudioDevice As IAudioDevice
+Dim Music As IOutputStream
+Set CAService = CreateObject("COMAudio.Service")
+CAService.ArchiveExtension = ".foo"
+CAService.UseEncryption = True
+Set AudioDevice = CAService.OpenDevice("", "")
+Set Music = AudioDevice.OpenSound("sounds/music.ogg", True)
+Music.Repeating = True
+Music.Play
+
+In the third example, a sound file is loaded once into a buffer from which two independent sound objects are then created.  The first instance of this sound is then played at half its normal volume on the far left.
+
+Dim CAService As COMAudioService
+Dim AudioDevice As IAudioDevice
+Dim MonkeyBuffer As IBuffer
+Dim Monkey1 As IOutputStream
+Dim Monkey2 As IOutputStream
+Set CAService = CreateObject("COMAudio.Service")
+Set AudioDevice = CAService.OpenDevice("", "")
+Set MonkeyBuffer = AudioDevice.CreateBuffer("sounds/monkey.ogg")
+Set Monkey1 = MonkeyBuffer.OpenSound
+Set Monkey2 = MonkeyBuffer.OpenSound
+Monkey1.Volume = 0.5
+Monkey1.Pan = -1.0
+Monkey1.Play
+
+Details:
+
+Before you can use COMAudio from Visual Basic 6.0, you will need to add a reference to the COMAudio 1.0 type library in your project.  To do this, first choose "References" from the Project menu.  Then navigate to "COMAudio 1.0 Type Library" in the list view, check the box next to that item, and press the OK button.  For other programming languages, such as JavaScript or VBScript, an equivalent procedure is usually not required; and nothing equivalent to the Dim statements shown below will be required either.
+
+The top-level object in COMAudio is the service object, which has a program ID (ProgID) of "COMAudio.Service".  You can declare and create the service object with the following VB code:
+
+Dim CAService As COMAudioService
+Set CAService = CreateObject("COMAudio.Service")
+
+The most important method of this object is OpenDevice.  The OpenDevice method takes two arguments, the name of the audio device, and a string containing additional parameters for the device.  The return value is a device object.  For more information about device names and parameters, please refer to the Audiere documentation.  However, since COMAudio does not currently support enumeration of available audio devices, you will usually use the defaults by passing two empty strings to this method.  An example including the declaration for the audio device object follows:
+
+Dim AudioDevice As IAudioDevice
+Set AudioDevice = CAService.OpenDevice("", "")
+
+You should do this once in your program, then use the same device object for all playback.
+
+The service object has the following additional methods:
+
+Encrypt:  This method is used to encrypt sound files and ZIP archives.  It has two parameters, the name of the unencrypted file and the name of the encrypted file which this method creates.  These two names must not be the same.  This method has no return value.
+
+The service object also has the following properties:
+
+ArchiveExtension (string):  The expected file extension for ZIP archives.  The default is ".dat".  The value of this property should begin with a period.
+
+UseEncryption (boolean):  Indicates whether sound files and ZIP archives should be decrypted using the current encryption key.  While this property is true, COMAudio will assume that sound files and ZIP archives are encrypted.  Conversely, while this property is false, COMAudio will assume that sound files and ZIP archives are not encrypted.
+
+EncryptionKey (string):  This non-empty string is the key for encrypted sound files and ZIP archives.  The key can be anything you want; the longer it is, the better.  The default is "TEST".  Be sure to set this property to the correct value for your application before calling the Encrypt method or trying to read an encrypted file.
+
+The simplest way to open a sound file for playback is to use the device object's OpenSound method.  This method takes two arguments, the name of the file to open, and a boolean argument indicating whether the sound should be streamed.  If the second argument is false, the whole sound will be read and decoded into memory before the function returns.  Thus, streaming should be used for all but short, frequently played sounds.  This method's return value is a sound object.  An example, including the declaration of the sound object, follows:
+
+Dim Sound As IOutputStream
+Set Sound = AudioDevice.OpenSound("sounds/music.ogg", True)
+
+Each directory component in the file path can refer to either an actual directory or a ZIP archive.  For example, assuming you have not changed the ArchiveExtension property of the service object, "sounds/music.ogg" can refer to either a file called "music.ogg" in the "sounds" directory, or a file called "music.ogg" in the "sounds.dat" ZIP archive.  When including the name of a ZIP archive in the path, you should omit the archive's extension and make sure that the service object's ArchiveExtension property is set correctly.  Note also that all slashes following the base name of a ZIP archive must be forward slashes as shown in the example above, rather than backslashes.  This inconvenience may be addressed in a future version of COMAudio.
+
+The extension of the sound file itself does not matter.  The sound file format will be determined based on the file's contents, not its extension.  You can use this feature to disguise sound files which you choose not to store in a ZIP archive.
+
+The device object has a second method, CreateBuffer, which loads sound from a file into a buffer that is then used to create any number of independent sound objects.  The buffer object returned by CreateBuffer cannot be played directly, but it has a method called OpenSound which creates playable sound objects.  A simple example of this feature's usage is given in the Examples section above.  Usually, after the buffer is created, a loop will be used to create sound objects from the buffer and store them in an array.  Alternatively, sound objects can be created from the buffer as they are needed.
+
+The sound object has the following methods, none of which have any arguments or a return value:
+
+Play:  Starts or resumes playback.
+
+Stop:  Stops playback.
+
+Reset:  Resets the position in the sound.  If the sound is currently playing, it will jump back to the beginning.  If the sound is not playing, then it will start at the beginning the next time the Play method is called.
+
+The following properties are also available:
+
+Playing (boolean, read-only):  Indicates whether the sound is currently playing.
+
+Volume (floating point):  The volume of the sound, between 0.0 and 1.0.
+
+Pan (floating point):  The position of the sound in the stereo field.  Examples:  -1.0 (extreme left), 0.0 (center), 1.0 (extreme right).
+
+PitchShift (floating point):  Factor by which to adjust the playback speed and pitch.  Examples:  0.5 (half original speed), 1.0 (original speed), 2.0 (twice original speed).
+
+Seekable (boolean, read-only):  Indicates whether the application can get the length and position of the sound and skip to a different position.
+
+Length (integer, read-only):  The length of the sound in samples.  Undefined if Seekable is False.
+
+Position (integer):  The current position in the sound in samples.  Can be read and changed if Seekable is true; behavior is undefined if Seekable is false.
+
+Repeating (boolean):  Indicates whether the sound will restart from the beginning when it is finished.  Useful for background music and ambiance.
+
+ChannelCount (integer, read-only):  The number of channels in the sound, either 1 (mono) or 2 (stereo).
+
+SampleRate (integer, read-only):  The sample rate of the sound in hertz (Hz).
+
+ZIP Archives and Encryption:
+
+The purpose of storing sounds in a ZIP archive is not to compress the sounds but to reduce the number of files visible to the user.  In fact, if you create a compressed ZIP archive, sounds will load much more slowly than if you create the ZIP archive without compression.  It is therefore recommended that you always turn compression off when creating a ZIP archive to be read by COMAudio.
+
+When using ZIP archives and encryption together, the ZIP archive as a whole must be encrypted, and not the sound files within the archive.  You should create the ZIP archive using your favorite ZIP file manipulation program, then use the Encrypt method of the COMAudio service object to encrypt it.  No utility program is provided for encrypting files; you should write your own script or program which uses the Encrypt method to do this.  That way, you can have whatever type of user interface you prefer for encrypting your files.
+
+Notes:
+
+Playback always happens in a separate thread; that is, it happens in the background.  If you want to wait until a sound is finished playing, the only way to do that at this time is to frequently check the Playing property of that sound object.  There should be a short delay, such as 50 milliseconds, between checks.  You can do this using either a loop or a timer.  Specifics of how to implement this depend on the needs of the application and are beyond the scope of this document.
+
+Pitch shift is implemented by adjusting the frequency of the sound.  When you set the PitchShift property, the value you supply is multiplied by the original sample rate of the sound (e.g. 44100 Hz) to obtain the new frequency.  Some audio hardware doesn't support frequencies above 48000 Hz, so depending on the original sample rate of the sound, the maximum value of PitchShift may be quite limited.
+
+Also note that due to limitations in the MP3 format, MP3 is not suitable for most repeating sounds.  For this, I highly recommend Ogg Vorbis (http://www.vorbis.com/) instead.  Ogg Vorbis has other advantages over MP3, anyway.
+
+Finally, note that when all references to a sound object go away, the sound will stop playing.  Therefore, each sound object must be assigned to at least one variable for as long as you want that sound to play.  However, it is not necessary to keep a reference to the service object once you have opened the device, and it is not necessary to keep a reference to the device object if you do not need to open more sounds.
+
+Redistribution:
+
+Since COMAudio is in the public domain, you may redistribute it with any application you develop.  To do this, your installer should place audiere.dll and COMAudio.dll in the user's Windows system directory.  The installer should also register COMAudio.dll as a COM/ActiveX component.  Also make sure to do the proper cleanup when your application is removed, being careful not to remove any DLL that another application might still be using.  The details of how to do these things depend on the installer.
+
+Here is an example script section for Inno Setup:
+
+[Files]
+Source: "C:\Program Files\COMAudio SDK\runtime\audiere.dll"; DestDir: "{sys}"; Flags: restartreplace sharedfile
+Source: "C:\Program Files\COMAudio SDK\runtime\COMAudio.dll"; DestDir: "{sys}"; Flags: restartreplace sharedfile regserver
+
+Please contact me if you need help with a different installer.
+
+Support:
+
+If you have any questions or problems, please contact me by email at mattcampbell@pobox.com.  That is also my MSN Messenger address.  Thank you for using COMAudio!
+
+Credits:
+
+Many thanks to the following free software projects:
+
+Audiere (http://audiere.sourceforge.net/)
+zlib (http://www.gzip.org/zlib/)
+zziplib (http://zziplib.sourceforge.net/)

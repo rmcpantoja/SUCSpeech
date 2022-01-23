@@ -1,0 +1,259 @@
+==================================================
+Function Name     : DllCanUnloadNow
+Address           : 0x100021a7
+Relative Address  : 0x000021a7
+Ordinal           : 1 (0x1)
+Filename          : COMAudio.dll
+Full Path         : C:\Users\angel\Documents\MCY downloader0.7\Source code\COMAudio.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : DllGetClassObject
+Address           : 0x100021b3
+Relative Address  : 0x000021b3
+Ordinal           : 2 (0x2)
+Filename          : COMAudio.dll
+Full Path         : C:\Users\angel\Documents\MCY downloader0.7\Source code\COMAudio.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : DllRegisterServer
+Address           : 0x100022a2
+Relative Address  : 0x000022a2
+Ordinal           : 3 (0x3)
+Filename          : COMAudio.dll
+Full Path         : C:\Users\angel\Documents\MCY downloader0.7\Source code\COMAudio.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : DllUnregisterServer
+Address           : 0x10002419
+Relative Address  : 0x00002419
+Ordinal           : 4 (0x4)
+Filename          : COMAudio.dll
+Full Path         : C:\Users\angel\Documents\MCY downloader0.7\Source code\COMAudio.dll
+Type              : Exported Function
+==================================================
+
+==================================================
+Function Name     : IAudioDevice::CreateBuffer
+Address           : 
+Relative Address  : 
+Ordinal           : 2 (0x2)
+Filename          : COMAudio.dll
+Full Path         : C:\Users\angel\Documents\MCY downloader0.7\Source code\COMAudio.dll
+Type              : COM Method
+==================================================
+
+==================================================
+Function Name     : IAudioDevice::OpenSound
+Address           : 
+Relative Address  : 
+Ordinal           : 1 (0x1)
+Filename          : COMAudio.dll
+Full Path         : C:\Users\angel\Documents\MCY downloader0.7\Source code\COMAudio.dll
+Type              : COM Method
+==================================================
+
+==================================================
+Function Name     : IBuffer::OpenSound
+Address           : 
+Relative Address  : 
+Ordinal           : 1 (0x1)
+Filename          : COMAudio.dll
+Full Path         : C:\Users\angel\Documents\MCY downloader0.7\Source code\COMAudio.dll
+Type              : COM Method
+==================================================
+
+==================================================
+Function Name     : ICOMAudioService::ActivateLicense
+Address           : 
+Relative Address  : 
+Ordinal           : 2 (0x2)
+Filename          : COMAudio.dll
+Full Path         : C:\Users\angel\Documents\MCY downloader0.7\Source code\COMAudio.dll
+Type              : COM Method
+==================================================
+
+==================================================
+Function Name     : ICOMAudioService::ArchiveExtension
+Address           : 
+Relative Address  : 
+Ordinal           : 3 (0x3)
+Filename          : COMAudio.dll
+Full Path         : C:\Users\angel\Documents\MCY downloader0.7\Source code\COMAudio.dll
+Type              : COM Property
+==================================================
+
+==================================================
+Function Name     : ICOMAudioService::Encrypt
+Address           : 
+Relative Address  : 
+Ordinal           : 6 (0x6)
+Filename          : COMAudio.dll
+Full Path         : C:\Users\angel\Documents\MCY downloader0.7\Source code\COMAudio.dll
+Type              : COM Method
+==================================================
+
+==================================================
+Function Name     : ICOMAudioService::EncryptionKey
+Address           : 
+Relative Address  : 
+Ordinal           : 5 (0x5)
+Filename          : COMAudio.dll
+Full Path         : C:\Users\angel\Documents\MCY downloader0.7\Source code\COMAudio.dll
+Type              : COM Property
+==================================================
+
+==================================================
+Function Name     : ICOMAudioService::OpenDevice
+Address           : 
+Relative Address  : 
+Ordinal           : 1 (0x1)
+Filename          : COMAudio.dll
+Full Path         : C:\Users\angel\Documents\MCY downloader0.7\Source code\COMAudio.dll
+Type              : COM Method
+==================================================
+
+==================================================
+Function Name     : ICOMAudioService::UseEncryption
+Address           : 
+Relative Address  : 
+Ordinal           : 4 (0x4)
+Filename          : COMAudio.dll
+Full Path         : C:\Users\angel\Documents\MCY downloader0.7\Source code\COMAudio.dll
+Type              : COM Property
+==================================================
+
+==================================================
+Function Name     : IOutputStream::ChannelCount
+Address           : 
+Relative Address  : 
+Ordinal           : 12 (0xc)
+Filename          : COMAudio.dll
+Full Path         : C:\Users\angel\Documents\MCY downloader0.7\Source code\COMAudio.dll
+Type              : COM Property
+==================================================
+
+==================================================
+Function Name     : IOutputStream::Length
+Address           : 
+Relative Address  : 
+Ordinal           : 7 (0x7)
+Filename          : COMAudio.dll
+Full Path         : C:\Users\angel\Documents\MCY downloader0.7\Source code\COMAudio.dll
+Type              : COM Property
+==================================================
+
+==================================================
+Function Name     : IOutputStream::Pan
+Address           : 
+Relative Address  : 
+Ordinal           : 5 (0x5)
+Filename          : COMAudio.dll
+Full Path         : C:\Users\angel\Documents\MCY downloader0.7\Source code\COMAudio.dll
+Type              : COM Property
+==================================================
+
+==================================================
+Function Name     : IOutputStream::PitchShift
+Address           : 
+Relative Address  : 
+Ordinal           : 6 (0x6)
+Filename          : COMAudio.dll
+Full Path         : C:\Users\angel\Documents\MCY downloader0.7\Source code\COMAudio.dll
+Type              : COM Property
+==================================================
+
+==================================================
+Function Name     : IOutputStream::Play
+Address           : 
+Relative Address  : 
+Ordinal           : 1 (0x1)
+Filename          : COMAudio.dll
+Full Path         : C:\Users\angel\Documents\MCY downloader0.7\Source code\COMAudio.dll
+Type              : COM Method
+==================================================
+
+==================================================
+Function Name     : IOutputStream::Playing
+Address           : 
+Relative Address  : 
+Ordinal           : 3 (0x3)
+Filename          : COMAudio.dll
+Full Path         : C:\Users\angel\Documents\MCY downloader0.7\Source code\COMAudio.dll
+Type              : COM Property
+==================================================
+
+==================================================
+Function Name     : IOutputStream::Position
+Address           : 
+Relative Address  : 
+Ordinal           : 9 (0x9)
+Filename          : COMAudio.dll
+Full Path         : C:\Users\angel\Documents\MCY downloader0.7\Source code\COMAudio.dll
+Type              : COM Property
+==================================================
+
+==================================================
+Function Name     : IOutputStream::Repeating
+Address           : 
+Relative Address  : 
+Ordinal           : 11 (0xb)
+Filename          : COMAudio.dll
+Full Path         : C:\Users\angel\Documents\MCY downloader0.7\Source code\COMAudio.dll
+Type              : COM Property
+==================================================
+
+==================================================
+Function Name     : IOutputStream::Reset
+Address           : 
+Relative Address  : 
+Ordinal           : 10 (0xa)
+Filename          : COMAudio.dll
+Full Path         : C:\Users\angel\Documents\MCY downloader0.7\Source code\COMAudio.dll
+Type              : COM Method
+==================================================
+
+==================================================
+Function Name     : IOutputStream::SampleRate
+Address           : 
+Relative Address  : 
+Ordinal           : 13 (0xd)
+Filename          : COMAudio.dll
+Full Path         : C:\Users\angel\Documents\MCY downloader0.7\Source code\COMAudio.dll
+Type              : COM Property
+==================================================
+
+==================================================
+Function Name     : IOutputStream::Seekable
+Address           : 
+Relative Address  : 
+Ordinal           : 8 (0x8)
+Filename          : COMAudio.dll
+Full Path         : C:\Users\angel\Documents\MCY downloader0.7\Source code\COMAudio.dll
+Type              : COM Property
+==================================================
+
+==================================================
+Function Name     : IOutputStream::Stop
+Address           : 
+Relative Address  : 
+Ordinal           : 2 (0x2)
+Filename          : COMAudio.dll
+Full Path         : C:\Users\angel\Documents\MCY downloader0.7\Source code\COMAudio.dll
+Type              : COM Method
+==================================================
+
+==================================================
+Function Name     : IOutputStream::Volume
+Address           : 
+Relative Address  : 
+Ordinal           : 4 (0x4)
+Filename          : COMAudio.dll
+Full Path         : C:\Users\angel\Documents\MCY downloader0.7\Source code\COMAudio.dll
+Type              : COM Property
+==================================================
